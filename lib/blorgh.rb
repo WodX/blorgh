@@ -2,14 +2,17 @@
 
 require 'blorgh/version'
 require 'blorgh/engine'
+require 'blorgh/configuration'
+require 'blorgh/logger'
 
 module Blorgh
-  # This do stuff
-  class Logger
-    class << self
-      def broadcast_message(channel, status, payload)
-        ActionCable.server.broadcast channel, { status: status, payload: payload }
-      end
+  class << self
+    def configuration
+      @configuration ||= Configuration.new
+    end
+
+    def configure
+      yield(configuration)
     end
   end
 end
