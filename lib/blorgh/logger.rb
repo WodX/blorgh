@@ -1,7 +1,7 @@
 # frozen_string_literal: true
 
 module Blorgh
-  # Logger contains the methods to briadcast a message
+  # Logger contains the methods to broadcast a message
   class Logger
     class << self
       def broadcast_message(payload)
