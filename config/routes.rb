@@ -1,4 +1,3 @@
 Blorgh::Engine.routes.draw do
-  resources :articles
-  root to: 'articles#index'
+  root to: 'logger#index'
 end

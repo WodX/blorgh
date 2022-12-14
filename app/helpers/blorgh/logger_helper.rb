@@ -1,4 +1,4 @@
 module Blorgh
-  module ArticlesHelper
+  module LoggerHelper
   end
 end
