@@ -3,11 +3,12 @@
 module Blorgh
   # This class will initialize the configuration
   class Configuration
-    attr_accessor :channel, :persist
+    attr_accessor :channel, :persist, :all_exceptions
 
     def initialize
-      @channel = 'kek_channel'
+      @channel = 'blorgh_channel'
       @persist = false
+      @all_exceptions = false
     end
   end
 end
