@@ -9,12 +9,20 @@ module Blorgh
     @limit = 5
 
     class << self
+      def error(payload)
+        broadcast_message({ type: 'error', response: payload.to_json })
+      end
+
+      def message(payload)
+        broadcast_message({ type: 'message', response: payload.to_json })
+      end
+
+      private
+
       def broadcast_message(*payload)
         message = Blorgh.configuration.persist ? redis_persist(payload) : payload
         ActionCable.server.broadcast Blorgh.configuration.channel, message
       end
-
-      private
 
       def to_ms(time)
         (time.to_f * 1000.0).to_i
