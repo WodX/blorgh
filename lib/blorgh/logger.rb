@@ -9,7 +9,7 @@ module Blorgh
     @limit = 5
 
     class << self
-      def broadcast_message(payload)
+      def broadcast_message(*payload)
         message = Blorgh.configuration.persist ? redis_persist(payload) : payload
         ActionCable.server.broadcast Blorgh.configuration.channel, message
       end
