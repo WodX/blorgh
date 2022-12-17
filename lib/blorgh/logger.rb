@@ -17,6 +17,18 @@ module Blorgh
         broadcast_message({ type: 'message', response: payload.to_json })
       end
 
+      def handle_exception(payload)
+        broadcast_message({ type: 'exception', response: payload.to_json })
+      end
+
+      def info(payload)
+        broadcast_message({ type: 'info', response: payload.to_json })
+      end
+
+      def warn(payload)
+        broadcast_message({ type: 'warn', response: payload.to_json })
+      end
+
       private
 
       def broadcast_message(*payload)
