@@ -25,6 +25,7 @@ table {
   display: block;
   text-align: left;
   border-collapse: collapse;
+  width: 100%;
 }
 
 tr {
@@ -39,6 +40,10 @@ th {
 td {
   padding: 5px;
   min-width: 100px;
+}
+
+.message {
+  width: 100%;
 }
 
 #blorgh {
