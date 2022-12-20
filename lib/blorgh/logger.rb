@@ -29,6 +29,8 @@ module Blorgh
 
       def redis_data
         redis = Redis.new
+        min_timestamp = to_ms(Time.now) - to_ms(@ttl)
+        redis.call(['xtrim', Blorgh.configuration.channel, 'minid', '=', "#{min_timestamp}-0"])
         redis.xrevrange(Blorgh.configuration.channel, '+', '-', count: @limit)
       end
 
