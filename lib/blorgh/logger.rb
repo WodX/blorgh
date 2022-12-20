@@ -10,30 +10,37 @@ module Blorgh
 
     class << self
       def error(payload)
-        broadcast_message({ type: 'error', response: payload.to_json })
-      end
-
-      def message(payload)
-        broadcast_message({ type: 'message', response: payload.to_json })
-      end
-
-      def handle_exception(payload)
-        broadcast_message({ type: 'exception', response: payload.to_json })
-      end
-
-      def info(payload)
-        broadcast_message({ type: 'info', response: payload.to_json })
+        broadcast_message(format_payload('error', payload))
       end
 
       def warn(payload)
-        broadcast_message({ type: 'warn', response: payload.to_json })
+        broadcast_message(format_payload('warn', payload))
+      end
+
+      def info(payload)
+        broadcast_message(format_payload('info', payload))
+      end
+
+      def handle_exception(payload)
+        return unless Blorgh.configuration.all_exceptions
+
+        broadcast_message(format_payload('exception', payload))
+      end
+
+      def redis_data
+        redis = Redis.new
+        redis.xrevrange(Blorgh.configuration.channel, '+', '-', count: @limit)
       end
 
       private
 
+      def format_payload(type, payload)
+        { type: type, time: to_ms(Time.now), message: payload.to_json, groupId: '0' }
+      end
+
       def broadcast_message(*payload)
-        message = Blorgh.configuration.persist ? redis_persist(payload) : payload
-        ActionCable.server.broadcast Blorgh.configuration.channel, message
+        redis_persist(payload) if Blorgh.configuration.persist
+        ActionCable.server.broadcast Blorgh.configuration.channel, payload
       end
 
       def to_ms(time)

@@ -1,7 +1,27 @@
-<h1>Logger#index</h1>
+<h1>Cool Gem Name</h1>
+<div class="card">
+  <table cellspacing="0" cellpadding="0">
+    <tr>
+      <th>Level</th>
+      <th>Time</th>
+      <th>Message</th>
+    </tr>
 
-<div id="payload"></div>
+    <tbody id="blorgh"></tbody>
+  </table>
+</div>
 
+<script>
+  const copyElement = (e) => {
+    navigator.clipboard.writeText(e.querySelector(".message").textContent);
+    e.querySelector(".message i").classList.remove("bi-clipboard")
+    e.querySelector(".message i").classList.add("bi-clipboard-check")
+  }
 
-<%# <%= javascript_include_tag 'application' %>
-<%= javascript_pack_tag 'application' %>
+  const resetState = (e) => {
+    e.querySelector(".message i").classList.remove("bi-clipboard-check")
+    e.querySelector(".message i").classList.add("bi-clipboard")
+  }
+</script>
+
+<%= javascript_pack_tag 'blorgh_channel' %>
